@@ -24,8 +24,5 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p audio/responses podcasts/uploads podcasts/transcripts
 
-# Expose port
-EXPOSE $PORT
-
 # Start command
 CMD gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1 --max-requests 100
