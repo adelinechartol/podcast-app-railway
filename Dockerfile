@@ -25,4 +25,9 @@ COPY . .
 RUN mkdir -p audio/responses podcasts/uploads podcasts/transcripts
 
 # Start command
-CMD gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1 --max-requests 100
+# Copy start script
+COPY start.sh .
+RUN chmod +x start.sh
+
+# Use the start script
+CMD ["sh", "./start.sh"]
