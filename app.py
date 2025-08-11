@@ -13,6 +13,11 @@ from pydub import AudioSegment
 import concurrent.futures
 import threading
 
+print("🚀 Starting app.py...")
+print(f"Python version: {sys.version}")
+print(f"Current directory: {os.getcwd()}")
+print(f"Files in directory: {os.listdir('.')}")
+
 app = Flask(__name__)
 
 # Enhanced CORS for production
@@ -530,7 +535,12 @@ def internal_server_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5001))
-    print("✅ Railway production backend ready!")
-    print(f"👉 Running on port {port}")
-    app.run(host='0.0.0.0', port=port, debug=Config.DEBUG)
+    try:
+        port = int(os.environ.get('PORT', 5001))
+        print("✅ Railway production backend ready!")
+        print(f"👉 Running on port {port}")
+        app.run(host='0.0.0.0', port=port, debug=Config.DEBUG)
+    except Exception as e:
+        print(f"❌ Failed to start server: {e}")
+        import traceback
+        traceback.print_exc()
