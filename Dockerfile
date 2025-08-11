@@ -29,4 +29,5 @@ RUN mkdir -p audio/responses podcasts/uploads podcasts/transcripts
 COPY run.py .
 
 # Use Python to start the app
-CMD ["python", "run.py"]
+# Railway typically uses port 8080 internally
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8080", "--timeout", "120", "--workers", "1"]
