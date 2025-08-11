@@ -25,9 +25,8 @@ COPY . .
 RUN mkdir -p audio/responses podcasts/uploads podcasts/transcripts
 
 # Start command
-# Copy start script
-COPY start.sh .
-RUN chmod +x start.sh
+# Copy run script
+COPY run.py .
 
-# Use the start script
-CMD ["sh", "./start.sh"]
+# Use Python to start the app
+CMD ["python", "run.py"]
