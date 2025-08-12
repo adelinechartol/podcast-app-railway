@@ -557,31 +557,4 @@ def ask_question():
         
     except Exception as e:
         print(f"❌ Railway error: {e}")
-        return jsonify({'error': f'Processing failed: {str(e)}'}), 500
-
-@app.route('/audio/<filename>')
-def serve_audio(filename):
-    """Serve audio files"""
-    try:
-        return send_file(f'audio/responses/{filename}')
-    except FileNotFoundError:
-        return jsonify({'error': 'Audio file not found'}), 404
-
-@app.errorhandler(413)
-def request_entity_too_large(error):
-    return jsonify({'error': 'File too large'}), 413
-
-@app.errorhandler(500)
-def internal_server_error(error):
-    return jsonify({'error': 'Internal server error'}), 500
-
-if __name__ == '__main__':
-    try:
-        port = int(os.environ.get('PORT', 5001))
-        print("✅ Railway production backend ready!")
-        print(f"👉 Running on port {port}")
-        app.run(host='0.0.0.0', port=port, debug=Config.DEBUG)
-    except Exception as e:
-        print(f"❌ Failed to start server: {e}")
-        import traceback
-        traceback.print_exc()
+        return js

@@ -6,3 +6,4 @@ audio/
 podcasts/
 node_modules/
 *.log
+.vercel
