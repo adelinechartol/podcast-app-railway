@@ -1,66 +1,25 @@
-# Core Flask imports
 from flask import Flask, request, jsonify, send_file, render_template_string
 from flask_cors import CORS
-
-# AI and API imports
+import whisper
 import google.generativeai as genai
 from elevenlabs import generate, set_api_key, voices
-
-# Standard library imports
 import os
 import json
 import tempfile
 from datetime import datetime
 from pathlib import Path
 import time
+from pydub import AudioSegment
 import concurrent.futures
 import threading
 
-# Environment variables
-from dotenv import load_dotenv
+print("🚀 Starting app.py...")
+print(f"Python version: {sys.version}")
+print(f"Current directory: {os.getcwd()}")
+print(f"Files in directory: {os.listdir('.')}")
 
-# Optional imports for audio processing (may not work on Vercel)
-try:
-    import whisper
-    WHISPER_AVAILABLE = True
-except ImportError:
-    print("⚠️ Whisper not available - running without speech recognition")
-    whisper = None
-    WHISPER_AVAILABLE = False
-
-try:
-    from pydub import AudioSegment
-    PYDUB_AVAILABLE = True
-except ImportError:
-    print("⚠️ Pydub not available - running without audio processing")
-    AudioSegment = None
-    PYDUB_AVAILABLE = False
-
-# Optional heavy audio processing libraries
-try:
-    import librosa
-    LIBROSA_AVAILABLE = True
-except ImportError:
-    print("⚠️ Librosa not available")
-    librosa = None
-    LIBROSA_AVAILABLE = False
-
-try:
-    import noisereduce as nr
-    NOISEREDUCE_AVAILABLE = True
-except ImportError:
-    print("⚠️ Noisereduce not available")
-    nr = None
-    NOISEREDUCE_AVAILABLE = False
-
-try:
-    import numpy as np
-except ImportError:
-    print("⚠️ Numpy not available")
-    np = None
-
-# Initialize Flask app
 app = Flask(__name__)
+
 # Enhanced CORS for production
 CORS(app, origins=["*"], methods=["GET", "POST", "OPTIONS"], 
      allow_headers=["Content-Type", "Authorization"])

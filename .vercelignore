@@ -1,0 +1,9 @@
+.env
+.git
+__pycache__
+*.pyc
+audio/
+podcasts/
+requirements_full.txt
+app_original.py
+
