@@ -3,8 +3,7 @@ services:
     name: podcast-app
     runtime: python
     plan: free
-    pythonVersion: "3.10"
-    buildCommand: "./build.sh && pip install -r requirements-render.txt"
+    buildCommand: "pip install -r requirements-minimal.txt"
     startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120"
     envVars:
       - key: GEMINI_API_KEY
